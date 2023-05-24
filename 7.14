@@ -1,0 +1,157 @@
+1.
+#include <iostream>
+using namespace std;
+void quicksort(int v[],int st,int dr)
+{
+int i,j,m,aux,d;
+if(st < dr)
+{
+m=(st+dr)/2;
+aux=v[st];
+v[st]=v[m];
+v[m]=aux;
+int i=st,j=dr,d=0;
+while(i<j)
+{
+if(v[i]>v[j])
+{
+aux=v[i];
+v[i]=v[j];
+v[j]=aux;
+d=1-d;
+}
+i=i+d;
+j=j-(1-d);
+}
+quicksort(v,st,i-1);
+quicksort(v,i+1,dr);
+}
+}
+void quicksort_d(int v[],int st,int dr)
+{
+int i,j,m,aux,d;
+if(st < dr)
+{
+m=(st+dr)/2;
+aux=v[st];
+v[st]=v[m];
+v[m]=aux;
+int i=st,j=dr,d=0;
+while(i<j)
+{
+if(v[i]<v[j])
+{
+aux=v[i];
+v[i]=v[j];
+v[j]=aux;
+d=1-d;
+}
+i=i+d;
+j=j-(1-d);
+}
+quicksort_d(v,st,i-1);
+quicksort_d(v,i+1,dr);
+}
+}
+int main()
+{
+int v1[]={1,5,7,2,14,82,20},v2[]={2,5,18,10,16},i1=0,i2=0,i,j,v3[12],i3=0;
+quicksort(v1,0,6);
+for(i=0;i<7;i++)
+cout<<v1[i]<<" ";
+cout<<endl;
+quicksort_d(v2,0,4);
+for(i=0;i<5;i++)
+cout<<v2[i]<<" ";
+cout<<endl;
+i2=4;
+while(i1<7 && i2>=0)
+if(v1[i1]<v2[i2])
+{
+v3[i3]=v1[i1];
+i1++;
+i3++;
+}
+else
+{
+v3[i3]=v2[i2];
+i2--;
+i3++;
+}
+if(i1<7)
+for(i1;i1<7;i1++)
+{
+v3[i3]=v1[i1];
+i3++;
+}
+if(i2>=0)
+for(i2;i2>=0;i2--)
+{
+v3[i3]=v1[i2];
+i3++;
+}
+for(i=0;i<i3;i++)
+cout<<v3[i]<<" ";
+}
+            4.
+#include <iostream>
+using namespace std;
+int st[20],k,i;
+void init()
+{
+st[k]=0;
+}
+int as()
+{
+st[k]++;
+if(st[k]>6)
+return 0;
+return 1;
+}
+int ev()
+{
+int i,n,valid=1;
+for(i=1;i<k;i++)
+if(st[k]==st[i])
+valid=0;
+if(k==2)
+if(st[k]!=2 && st[k]!=4)
+valid=0;
+return valid;
+}
+int solutie()
+{
+return (k==3);
+}
+void afisare()
+{
+int i;
+for(i=1;i<=3;i++)
+switch(st[i])
+{
+case 1:cout<<"alb ";break;
+case 2:cout<<"galben ";break;
+case 3:cout<<"rosu ";break;
+case 4:cout<<"verde ";break;
+case 5:cout<<"albastru ";break;
+case 6:cout<<"negru ";break;
+}
+cout<<endl;
+}
+int main()
+{
+k=0;
+init();
+while(k>=0)
+if(as()==1)
+if(ev()==1)
+if(solutie()==1)
+afisare();
+else
+{
+k++;
+init();
+}
+else;
+else k--;
+}
