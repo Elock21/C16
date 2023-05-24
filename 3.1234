@@ -1,0 +1,712 @@
+1)
+#include <iostream>
+using namespace std;
+struct elem{
+int nr;
+elem *urm,*ant;
+}*inc,*sf,*aux,*aux2;
+int prim(int x)
+{
+int d;
+if(x<=1) return 0;
+else for(d=2;d<=x/2;d++)
+if(x%d==0) return 0;
+return 1;
+}
+int main()
+{
+inc=new elem;
+cin>>inc->nr;
+inc->urm=inc;
+inc->ant=inc;
+sf=inc;
+int i;
+for(i=2;i<=7;i++)
+{
+aux=new elem;
+cin>>aux->nr;
+aux->urm=inc;
+aux->ant=sf;
+sf->urm=aux;
+sf=aux;
+}
+cout<<"Lista: ";
+aux = inc;
+cout<<aux->nr<<' ';
+aux=aux->urm;
+while (aux != inc)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<endl;
+///a)adaugare element la inceputul listei
+/*
+aux=new elem;
+
+cin>>aux->nr;
+aux->urm=inc;
+aux->ant=sf;
+inc->ant=aux;
+inc=aux;
+*/
+///b)stergerea penultimului element
+/*
+aux=sf->ant;
+aux2=aux->ant;
+sf->ant=aux2;
+delete aux;
+aux2->urm=sf;
+*/
+///c)stergerea numerelor prime
+/*
+do{
+if(inc==sf && prim(inc->nr)==1)
+{
+aux=inc;
+delete aux;
+inc=sf=NULL;
+}
+else if(prim(inc->nr)==1)
+{
+aux=inc;
+inc=inc->urm;
+delete aux;
+inc->ant=sf;
+}
+else if(prim(sf->nr)==1)
+{
+aux=sf;
+sf=aux->ant;
+delete aux;
+sf->urm=inc;
+}
+else {
+aux=inc;
+aux=aux->urm;
+while(aux!=inc && prim(aux->nr)!=1)
+aux=aux->urm;
+if(aux!=inc)
+{
+aux2=aux;
+aux=aux->urm;
+aux->ant=aux2->ant;
+aux=aux2->ant;
+aux->urm=aux2->urm;
+delete aux2;
+}
+}
+}while(aux!=inc);
+
+*/
+///d)afisarea numarului elementelor din lista si valoarea
+/*
+cout<<endl;
+int nrelem=0;
+aux=inc;
+if(inc!=NULL)
+{
+cout<<aux->nr<<' ';
+aux=aux->urm;
+nrelem++;
+do{
+cout<<aux->nr<<' ';
+aux=aux->urm;
+nrelem++;
+}while(aux!=inc);
+}
+cout<<endl<<nrelem;
+*/
+///e)afisarea in ordinea elementelor si in ordine inversa
+/*
+cout<<endl;
+aux = inc;
+cout<<aux->nr<<' ';
+aux=aux->urm;
+while (aux != inc)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<endl;
+aux=sf;
+do
+{
+cout<<aux->nr<<" ";
+aux=aux->ant;
+}while(aux!=inc);
+cout<<inc->nr;
+*/
+cout << endl;
+cout<<"Lista noua: ";
+aux = inc;
+cout<<aux->nr<<' ';
+aux=aux->urm;
+while (aux != inc)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+return 0;
+}
+
+2)
+#include <iostream>
+using namespace std;
+struct elem
+{
+int nr;
+elem *urm;
+} *inc, *sf, *aux, *aux2;
+int main()
+{
+int i;
+inc = new elem;
+cin >> inc->nr;
+inc->urm =inc;
+sf = inc;
+for (i = 2; i <= 7; i++)
+{
+aux = new elem;
+cin >> aux->nr;
+aux->urm=inc;
+sf->urm = aux;
+sf = aux;
+}
+cout<<"Lista: ";
+aux = inc;
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+cout << endl;
+///a)sterge primul element
+/*
+aux=inc;
+inc=inc->urm;
+delete aux;
+*/
+///b)sterge ultimul element
+/*
+aux=inc;
+while(aux->urm!=sf)
+aux=aux->urm;
+sf=aux;
+aux=aux->urm;
+delete aux;
+sf->urm=inc;
+
+*/
+///c)cauta o anumita valoare
+/*
+int numar,ok=0;
+cout<<"Numarul de cautat: ";cin>>numar;
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr==numar) ok=1;
+aux = aux->urm;
+}
+if(sf->nr==numar) ok=1;
+if(ok==1) cout<<"exista";
+else cout<<"nu exista";
+*/
+///d)numar de aparitii
+/*
+aux=inc;
+int ap=0,numar;
+cout<<"Numarul de cautat: ";cin>>numar;
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr==numar) ap++;
+aux = aux->urm;
+}
+if(sf->nr==numar) ap++;
+cout<<"Numar aparitii "<<numar<<": "<<ap;
+*/
+///e)afisare numere pare
+/*
+cout<<"Numere pare: ";
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr%2==0) cout << aux->nr << ' ';
+aux = aux->urm;
+}
+if(aux->nr%2==0) cout<<sf->nr;
+*/
+///f)afisare prime
+/*
+cout<<"Numere prime: ";
+int prim,d;
+aux = inc;
+while (aux != sf)
+{
+prim=1;
+if(aux->nr==0 || aux->nr==1) prim=0;
+else for(d=2;d<=aux->nr/2 && prim==1;d++)
+
+if(aux->nr%d==0) prim=0;
+if(prim==1) cout<<aux->nr<<' ';
+aux = aux->urm;
+}
+prim=1;
+if(sf->nr==0 || sf->nr==1) prim=0;
+else for(d=2;d<=sf->nr/2 && prim==1;d++)
+if(sf->nr%d==0) prim=0;
+if(prim==1) cout<<sf->nr;
+*/
+///g)dublare valori pozitive
+/*
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr%2==0) aux->nr=aux->nr*2;
+aux = aux->urm;
+}
+if(sf->nr%2==0) sf->nr=sf->nr*2;
+*/
+///h)stergere element citit de la tastatura
+/*
+int x;
+cout<<"Elementul de sters: ";cin>>x;
+aux=inc;
+do{
+if(inc==sf && sf->nr==x)
+{
+delete inc;
+inc=sf=NULL;
+aux=NULL;
+}
+else if(inc->nr==x)
+{
+aux=inc;
+inc=inc->urm;
+delete aux;
+}
+else if(sf->nr==x)
+{
+aux=inc;
+while(aux->urm!=sf)
+aux=aux->urm;
+sf=aux;
+aux=aux->urm;
+delete aux;
+sf->urm=inc;
+}
+else
+{
+aux=inc;
+
+while(aux!=sf && aux->nr!=x)
+aux=aux->urm;
+if(aux!=sf)
+{
+aux2=inc;
+while(aux2->urm!=aux)
+aux2=aux2->urm;
+aux2->urm=aux->urm;
+delete aux;
+}
+}
+}while(aux!=sf);
+*/
+///i)numarare elemente ramase
+/*
+int nrelem=0;
+aux = inc;
+while (aux != sf)
+{
+nrelem++;
+aux = aux->urm;
+}
+nrelem++
+cout<<"Numar elemente ramase: "<<nrelem;
+*/
+///j)afisare in ordine inversa
+/*
+aux=sf;
+cout<<aux->nr<<' ';
+do{
+aux2=inc;
+while(aux2->urm!=aux)
+aux2=aux2->urm;
+aux=aux2;
+cout<<aux2->nr<<' ';
+}while(aux2!=inc);
+*/
+cout<<"Lista noua: ";
+aux = inc;
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+cout << endl;
+}
+
+3)
+#include <iostream>
+using namespace std;
+struct elem
+{
+int nr;
+elem *urm,*ant;
+} *inc, *sf, *aux, *aux2;
+int main()
+{
+int i;
+inc = new elem;
+cin >> inc->nr;
+inc->urm =inc;
+inc->ant=inc;
+sf = inc;
+for (i = 2; i <= 7; i++)
+{
+aux = new elem;
+cin >> aux->nr;
+aux->urm=inc;
+aux->ant=sf;
+sf->urm = aux;
+inc->ant=aux;
+sf = aux;
+}
+cout<<"Lista: ";
+aux = inc;
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+cout << endl;
+///a)sterge primul element
+/*
+aux=inc;
+inc=inc->urm;
+delete aux;
+inc->ant=sf;
+sf->urm=inc;
+*/
+///b)sterge ultimul element
+/*
+aux=inc;
+while(aux->urm!=sf)
+aux=aux->urm;
+sf=aux;
+aux=aux->urm;
+delete aux;
+sf->urm=inc;
+*/
+///c)cauta o anumita valoare
+/*
+int numar,ok=0;
+cout<<"Numarul de cautat: ";cin>>numar;
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr==numar) ok=1;
+aux = aux->urm;
+}
+if(sf->nr==numar) ok=1;
+if(ok==1) cout<<"exista ";
+else cout<<"nu exista ";
+/*
+///d)numar de aparitii
+/*
+aux=inc;
+int ap=0,numar;
+cout<<"Numarul de cautat: ";cin>>numar;
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr==numar) ap++;
+aux = aux->urm;
+}
+if(sf->nr==numar) ap++;
+cout<<"Numar aparitii "<<numar<<": "<<ap;
+*/
+///e)afisare numere pare
+/*
+cout<<"Numere pare: ";
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr%2==0) cout << aux->nr << ' ';
+aux = aux->urm;
+}
+if(aux->nr%2==0) cout<<sf->nr;
+*/
+///f)afisare prime
+/*
+cout<<"Numere prime: ";
+int prim,d;
+aux = inc;
+while (aux != sf)
+{
+prim=1;
+if(aux->nr==0 || aux->nr==1) prim=0;
+else for(d=2;d<=aux->nr/2 && prim==1;d++)
+if(aux->nr%d==0) prim=0;
+if(prim==1) cout<<aux->nr<<' ';
+aux = aux->urm;
+}
+prim=1;
+if(sf->nr==0 || sf->nr==1) prim=0;
+else for(d=2;d<=sf->nr/2 && prim==1;d++)
+if(sf->nr%d==0) prim=0;
+if(prim==1) cout<<sf->nr;
+*/
+///g)dublare valori pozitive
+/*
+aux = inc;
+while (aux != sf)
+{
+if(aux->nr%2==0) aux->nr=aux->nr*2;
+aux = aux->urm;
+}
+if(sf->nr%2==0) sf->nr=sf->nr*2;
+*/
+///h)stergere element citit de la tastatura
+/*
+int x;
+cout<<"Elementul de sters: ";cin>>x;
+aux=inc;
+do{
+if(inc==sf && sf->nr==x)
+{
+delete inc;
+inc=sf=NULL;
+aux=NULL;
+}
+else if(inc->nr==x)
+{
+aux=inc;
+inc=inc->urm;
+delete aux;
+inc->ant=sf;
+sf->urm=inc;
+}
+else if(sf->nr==x)
+{
+aux=inc;
+while(aux->urm!=sf)
+aux=aux->urm;
+sf=aux;
+aux=aux->urm;
+delete aux;
+sf->urm=inc;
+}
+else
+{
+aux=inc;
+while(aux!=sf && aux->nr!=x)
+aux=aux->urm;
+if(aux!=sf)
+{
+aux2=inc;
+while(aux2->urm!=aux)
+aux2=aux2->urm;
+aux2->urm=aux->urm;
+delete aux;
+aux2->urm->ant=aux2;
+}
+}
+}while(aux!=sf);
+*/
+///i)numarare elemente ramase
+/*
+int nrelem=0;
+aux = inc;
+while (aux != sf)
+{
+nrelem++;
+aux = aux->urm;
+}
+nrelem++
+cout<<"Numar elemente ramase: "<<nrelem;
+*/
+///j)afisare in ordine inversa
+/*
+aux=sf;
+cout<<aux->nr<<' ';
+do{
+aux2=inc;
+while(aux2->urm!=aux)
+aux2=aux2->urm;
+aux=aux2;
+cout<<aux2->nr<<' ';
+}while(aux2!=inc);
+*/
+cout<<"Lista noua: ";
+aux = inc;
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+cout << endl;
+}
+
+4)coada
+#include <iostream>
+using namespace std;
+struct elem
+{
+int nr;
+elem *urm;
+} *inc, *sf, *aux, *aux2;
+int main()
+{
+int i;
+inc = new elem;
+cin >> inc->nr;
+inc->urm =inc;
+sf = inc;
+for (i = 2; i <= 7; i++)
+{
+aux = new elem;
+cin >> aux->nr;
+aux->urm=inc;
+sf->urm = aux;
+sf = aux;
+}
+cout<<"Coada: ";
+aux = inc;
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+cout << endl;
+int ns;
+cout<<"Cate elemente se sterg din coada? ";
+cin>>ns;
+for(ns;ns>0;ns--)
+{
+if(inc!=NULL)
+if(inc==sf)
+{
+delete inc;
+inc=sf=NULL;
+aux=NULL;
+}
+else
+{
+aux=inc;
+while(aux->urm!=sf)
+aux=aux->urm;
+sf=aux;
+aux=aux->urm;
+delete aux;
+sf->urm=inc;
+}
+}
+cout<<"Cate elemente se adauga in coada? ";
+cin>>ns;
+cout<<"Adaugati elementele: ";
+for(ns;ns>0;ns--)
+{
+aux=new elem;
+cin>>aux->nr;
+aux->urm=inc;
+inc=aux;
+}
+cout<<"Coada noua: ";
+aux = inc;
+if(aux!=NULL)
+{
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+}
+cout << endl;
+}
+
+4)stiva
+#include <iostream>
+using namespace std;
+struct elem
+{
+int nr;
+elem *urm;
+} *inc, *sf, *aux, *aux2;
+int main()
+{
+int i;
+inc = new elem;
+cin >> inc->nr;
+inc->urm =inc;
+sf = inc;
+for (i = 2; i <= 7; i++)
+{
+aux = new elem;
+cin >> aux->nr;
+aux->urm=inc;
+sf->urm = aux;
+sf = aux;
+}
+cout<<"Stiva: ";
+aux = inc;
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+cout << endl;
+int ns;
+cout<<"Cate elemente se sterg din stiva? ";
+cin>>ns;
+for(ns;ns>0;ns--)
+{
+if(inc!=NULL)
+if(inc==sf)
+{
+delete inc;
+inc=sf=NULL;
+aux=NULL;
+}
+else
+{
+aux=inc;
+while(aux->urm!=sf)
+aux=aux->urm;
+sf=aux;
+aux=aux->urm;
+delete aux;
+sf->urm=inc;
+}
+}
+cout<<"Cate elemente se adauga in stiva? ";
+cin>>ns;
+cout<<"Adaugati elementele: ";
+for(ns;ns>0;ns--)
+{
+aux=new elem;
+cin>>aux->nr;
+sf->urm=aux;
+sf=aux;
+}
+cout<<"Stiva noua: ";
+aux = inc;
+if(aux!=NULL)
+{
+while (aux != sf)
+{
+cout << aux->nr << ' ';
+aux = aux->urm;
+}
+cout<<sf->nr;
+}
+cout << endl;
+}
