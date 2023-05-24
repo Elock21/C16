@@ -107,18 +107,29 @@ return 0;
             3
 #include <iostream>
 using namespace std;
-int main()
-{
-int x,d=2,p;
-cin>>x;
-while(x>1)
-{
-p=0;
-while(x%d==0) {x=x/2;p++;}
-cout<<d<<'^'<<p<<' ';
-d++;
-}
-return 0;
+int main(){
+    int n;
+    cin >> n;
+    int d = 2, p;
+    while(n > 1)
+    {
+        
+        p = 0;
+        while(n % d == 0)
+        {
+            ++p;
+            n /= d;
+        }
+        
+        if(p)
+            cout << d << "^" << p << endl;
+        ++ d;
+       
+        if(n>1 && d * d > n){
+            d = n; // trecem direct la n, urmatorul factor din descompunere
+        }
+    }
+    return 0;
 }
 4.
 #include <iostream>
