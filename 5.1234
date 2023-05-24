@@ -1,0 +1,293 @@
+          1. si 2.
+#include <iostream>
+using namespace std;
+
+struct nod{int nr; nod *st,*dr;}*rad,*aux,*aux2;
+int contor=0;
+nod *cautare_pozitie(nod *elem_arbore, int numar)
+{
+if(numar<elem_arbore->nr)
+if(elem_arbore->st==NULL)
+return elem_arbore;
+else
+return cautare_pozitie(elem_arbore->st,numar);
+else
+if(elem_arbore->dr==NULL)
+return elem_arbore;
+else
+return cautare_pozitie(elem_arbore->dr,numar);
+}
+void SRD(nod *elem_arbore)
+{
+if(elem_arbore!=NULL)
+{
+SRD(elem_arbore->st);
+cout<<elem_arbore->nr<<" ";
+SRD(elem_arbore->dr);
+}
+}
+void RSD(nod *elem_arbore)
+{
+if(elem_arbore!=NULL)
+{
+cout<<elem_arbore->nr<<" ";
+RSD(elem_arbore->st);
+RSD(elem_arbore->dr);
+}
+}
+void SDR(nod *elem_arbore)
+{
+if(elem_arbore!=NULL)
+{
+SDR(elem_arbore->st);
+SDR(elem_arbore->dr);
+cout<<elem_arbore->nr<<" ";
+}
+}
+void DRS(nod *elem_arbore)
+{
+if(elem_arbore!=NULL)
+{
+DRS(elem_arbore->dr);
+cout<<elem_arbore->nr<<" ";
+DRS(elem_arbore->st);
+}
+}
+
+bool prim(int x)
+{
+if(x==1 || x==0) return false;
+int d;
+for(d=2;d<=x/2;d++)
+if(x%d==0) return false;
+return true;
+}
+
+void RSD_cauta_prime(nod *elem_arbore)
+{
+if(elem_arbore!=NULL)
+{
+if(prim(elem_arbore->nr)==true) cout<<elem_arbore->nr<<" ";
+RSD_cauta_prime(elem_arbore->st);
+RSD_cauta_prime(elem_arbore->dr);
+}
+}
+void cauta_valoare(nod *elem_arbore, int numar)
+{
+if(elem_arbore!=NULL)
+{
+if(elem_arbore->nr==numar) contor++;
+cauta_valoare(elem_arbore->st,numar);
+cauta_valoare(elem_arbore->dr,numar);
+}
+}
+
+int main()
+{
+int n,x,i,val;
+cout<<"n=";
+cin>>n;
+cin>>x;
+rad=new nod;
+rad->nr=x;
+rad->st=NULL;
+rad->dr=NULL;
+for(i=2;i<=n;i++)
+{
+cin>>x;
+aux=new nod;
+aux->nr=x;
+aux->st=NULL;
+aux->dr=NULL;
+aux2=cautare_pozitie(rad,x);
+if(x<aux2->nr)
+aux2->st=aux;
+else
+aux2->dr=aux;
+}
+cout<<"RSD (preordine): ";RSD(rad);cout<<endl;
+cout<<"SRD (inordine): ";SRD(rad);cout<<endl;
+cout<<"SDR (postordine): ";SDR(rad);cout<<endl;
+cout<<"DRS (postordine descrescator): ";DRS(rad);cout<<endl;
+cout<<"RSD (afisare prime in preordine): ";RSD_cauta_prime(rad);cout<<endl;
+cout<<"Introduceti valoarea de cautat: ";
+cin>>val;
+cauta_valoare(rad,val);
+cout<<contor<<" valori gasite"<<endl;
+}
+
+            3.a)b)c)d)
+#include <iostream>
+using namespace std;
+struct nod{int nr; nod *st,*dr;}*rad,*aux,*aux2;
+int contor=0;
+nod *cautare_pozitie(nod *elem_arbore, int numar)
+{
+if(numar<elem_arbore->nr)
+if(elem_arbore->st==NULL)
+return elem_arbore;
+else
+return cautare_pozitie(elem_arbore->st,numar);
+else
+if(elem_arbore->dr==NULL)
+return elem_arbore;
+else
+return cautare_pozitie(elem_arbore->dr,numar);
+}
+void RSD(nod *elem_arbore)
+{
+if(elem_arbore!=NULL)
+{
+cout<<elem_arbore->nr<<" ";
+RSD(elem_arbore->st);
+RSD(elem_arbore->dr);
+}
+}
+void cauta_valoare(nod *elem_arbore, int numar)
+{
+if(elem_arbore!=NULL)
+{
+cauta_valoare(elem_arbore->st,numar);
+cauta_valoare(elem_arbore->dr,numar);
+}
+}
+void StergAux(nod *&p, nod *&R)
+{
+// R - nodul care trebuie sters
+// p - pointer cu care identificăm nodul cel mai din dreapta
+if(p->dr)
+StergAux(p -> dr , R);
+else
+{
+R->nr = p->nr;
+aux = p;
+p = p->st;
+delete aux;
+}
+}
+
+void Stergere(nod *&R , int x)
+{
+if(R != NULL)
+{
+if(R->nr == x)
+{
+// nodul trebuie șters
+if(R->st == NULL && R->dr == NULL)
+{
+delete R;
+R = NULL;
+}
+else
+if(R->dr == NULL)
+{
+aux = R;
+R = R->st;
+delete aux;
+}
+else
+if(R->st == NULL)
+{
+aux = R;
+R = R->dr;
+delete aux;
+}
+else
+StergAux(R->st, R);
+}
+else
+if(R->nr > x)
+Stergere(R->st , x);
+else
+Stergere(R->dr , x);
+}
+else
+return; // valoarea x nu apare în arbore
+}
+
+int main()
+{
+int n,x,i,val;
+cout<<"n=";
+cin>>n;
+cin>>x;
+rad=new nod;
+rad->nr=x;
+rad->st=NULL;
+rad->dr=NULL;
+for(i=2;i<=n;i++)
+{
+cin>>x;
+aux=new nod;
+aux->nr=x;
+aux->st=NULL;
+aux->dr=NULL;
+aux2=cautare_pozitie(rad,x);
+if(x<aux2->nr)
+aux2->st=aux;
+else
+aux2->dr=aux;
+}
+cout<<"RSD (preordine): ";RSD(rad);cout<<endl;
+cout<<"Introduceti valoarea de sters: ";
+cin>>val;
+Stergere(rad,val);
+cout<<"RSD (preordine): ";RSD(rad);cout<<endl;
+}
+
+              4)
+#include <iostream>
+using namespace std;
+struct nod{int nr; nod *st,*dr;}*rad,*aux,*aux2;
+int v[256];
+nod *cautare_pozitie(nod *elem_arbore, int numar)
+{
+if(numar<elem_arbore->nr)
+if(elem_arbore->st==NULL)
+return elem_arbore;
+else
+return cautare_pozitie(elem_arbore->st,numar);
+else
+if(elem_arbore->dr==NULL)
+return elem_arbore;
+else
+return cautare_pozitie(elem_arbore->dr,numar);
+}
+void SRD_ordonare(nod *elem_arbore, int &poz)
+{
+if(elem_arbore!=NULL)
+{
+SRD_ordonare(elem_arbore->st,poz);
+v[poz]=elem_arbore->nr;
+poz++;
+SRD_ordonare(elem_arbore->dr,poz);
+}
+}
+int main()
+{
+int n,x,i,poz=0;
+cout<<"n=";
+cin>>n;
+cin>>v[0];
+rad=new nod;
+rad->nr=v[0];
+rad->st=NULL;
+rad->dr=NULL;
+for(i=1;i<n;i++)
+{
+cin>>v[i];
+aux=new nod;
+aux->nr=v[i];
+aux->st=NULL;
+aux->dr=NULL;
+aux2=cautare_pozitie(rad,v[i]);
+if(v[i]<aux2->nr)
+aux2->st=aux;
+else
+aux2->dr=aux;
+}
+SRD_ordonare(rad,poz);
+cout<<endl;
+for(i=0;i<n;i++)
+cout<<v[i]<<' ';
+}
